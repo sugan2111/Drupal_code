@@ -1,0 +1,42 @@
+<?php
+
+function hook_hybridauth_user_insert($account, $data) {
+
+  $firstName = $data['firstName'];
+  $lastName = $data['lastName'];
+  $email = $data['email'];
+  $gender = $data['gender'];
+  $day = $data['birthDay'];
+  $mon = $data['birthMonth'];
+  $year = $data['birthYear'];
+ 
+  if($day=='' || $mon == '' || $year == '')
+  $dob = '';
+  else 
+   $dob = $mon."/".$day."/".$year;
+	
+	if($dob!=''){
+	$time = strtotime($dob);
+    $newformat = date('F j Y',$time);
+	}
+	else
+	$newformat = '';
+	
+ if (!civicrm_initialize()) {
+ drupal_set_message("civicrm not initialized");
+     return;
+  }
+ $params =  ['contact_type' => 'Individual',
+	'first_name' => $firstName,
+   'last_name' => $lastName,
+   'email'	=> $email,
+   'gender_id' => $gender,
+   'birth_date' => $newformat,
+   'version' => 3];
+ $result = civicrm_api3('Contact', 'create', $params);
+ 
+  drupal_set_message($firstName.",".$lastName.",".$email.",".$gender.",".$dob);
+ 
+  
+}
+?>

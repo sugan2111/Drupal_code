@@ -1,0 +1,6 @@
+name = hook
+description = Module containing the CiviCRM hooks 
+dependencies[] = civicrm
+package = CiviCRM
+core = 7.x
+version = 1.0
