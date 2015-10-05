@@ -26,13 +26,13 @@ function hook_hybridauth_user_insert($account, $data) {
  drupal_set_message("civicrm not initialized");
      return;
   }
- $params =  ['contact_type' => 'Individual',
+ $params =  array('contact_type' => 'Individual',
 	'first_name' => $firstName,
    'last_name' => $lastName,
    'email'	=> $email,
    'gender_id' => $gender,
    'birth_date' => $newformat,
-   'version' => 3];
+   'version' => 3);
  $result = civicrm_api3('Contact', 'create', $params);
  
   drupal_set_message($firstName.",".$lastName.",".$email.",".$gender.",".$dob);
